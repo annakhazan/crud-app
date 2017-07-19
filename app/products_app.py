@@ -21,6 +21,33 @@ print 'Destroy   | Delete an existing product'
 
 
 def read_input(operation):
-    print operation
+    if operation.title() == 'List':
+        list_products()
+    elif operation.title() == 'Show':
+        show_products()
+    elif operation.title() == 'Create':
+        create_products()
+    elif operation.title() == 'Update':
+        update_products()
+    elif operation.title() == 'Destroy':
+        destroy_products()
+    else:
+        print "Unrecognized Operation. Please choose one of: 'List', 'Show', 'Create', 'Update', or 'Destroy'."
+
+def list_products():
+    print 'listing products'
+
+def show_products():
+    print 'showing products'
+
+def create_products():
+    print 'creating products'
+
+def update_products():
+    print 'updating products'
+
+def destroy_products():
+    print 'destroying products'
+
 
 read_input(raw_input('Operation: '))
