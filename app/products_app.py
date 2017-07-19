@@ -21,20 +21,19 @@ print 'Destroy   | Delete an existing product'
 
 
 def read_input(operation):
-    if operation.title() == 'List':
+    if operation == 'List':
         list_products()
-    elif operation.title() == 'Show':
-        show_products()
-    elif operation.title() == 'Create':
-        create_products()
-    elif operation.title() == 'Update':
-        update_products()
-    elif operation.title() == 'Destroy':
-        destroy_products()
+    elif operation == 'Show':
+        show_product()
+    elif operation == 'Create':
+        create_product()
+    elif operation == 'Update':
+        update_product()
+    elif operation == 'Destroy':
+        destroy_product()
     else:
         print "Unrecognized Operation. Please choose one of: 'List', 'Show', 'Create', 'Update', or 'Destroy'."
 
-# Reading and writing to csv file
 def reading_file_contents(path):
     print 'Reading contents of database'
     count = 0
@@ -52,28 +51,50 @@ def reading_file_contents(path):
 
 def writing_file_contents(read_path, write_path):
     print 'Writing contents to database'
-    with open(write_path, 'w+') as f:
-        csvwriter = csv.writer(f)
-        csvwriter.writerow(['this is a row'])
+    with open(write_path, 'w+') as write_file:
+        csvwriter = csv.writer(write_file)
+        with open(read_path, 'rU') as read_file:
+            csvreader = csv.reader(read_file, delimiter = '\t')
+            for row in csvreader:
+                csvwriter.writerow(row)
 
+def overwriting_file_contents(path):
+    print 'Overwriting contents to database'
+    data = []
+    with open(path, 'rU') as f:
+        csvreader = csv.reader(f, delimiter = '\t')
+        for row in csvreader:
+            data.append(row)
+    with open(path, 'w+') as f:
+        csvwriter = csv.writer(f)
+        for row in data:
+            csvwriter.writerow(row)
+
+#Reading from csv file
 reading_file_contents('../data/products.csv')
 
-writing_file_contents('../data/products.csv', '../data/writing-stuff.csv')
+#Writing to another file
+writing_file_contents('../data/products.csv', '../data/writing-products.csv')
+
+#Writing to same file
+overwriting_file_contents('../data/products.csv')
+
+
 
 def list_products():
     print 'listing products'
 
-def show_products():
-    print 'showing products'
+def show_product():
+    print 'showing product'
 
-def create_products():
-    print 'creating products'
+def create_product():
+    print 'creating product'
 
-def update_products():
-    print 'updating products'
+def update_product():
+    print 'updating product'
 
-def destroy_products():
-    print 'destroying products'
+def destroy_product():
+    print 'destroying product'
 
 
-# read_input(raw_input('Operation: '))
+# read_input(raw_input('Operation: ').title())
