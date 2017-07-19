@@ -34,6 +34,32 @@ def read_input(operation):
     else:
         print "Unrecognized Operation. Please choose one of: 'List', 'Show', 'Create', 'Update', or 'Destroy'."
 
+# Reading and writing to csv file
+def reading_file_contents(path):
+    print 'Reading contents of database'
+    count = 0
+    text = ''
+    with open(path, 'rU') as f:
+        csvreader = csv.reader(f, delimiter='\t')
+        for row in csvreader:
+            if count == 0:
+                keys = row
+            else:
+                values = row
+                text += '+ ' + str(dict(zip(keys, values))) + '\n'
+            count += 1
+        print text
+
+def writing_file_contents(read_path, write_path):
+    print 'Writing contents to database'
+    with open(write_path, 'w+') as f:
+        csvwriter = csv.writer(f)
+        csvwriter.writerow(['this is a row'])
+
+reading_file_contents('../data/products.csv')
+
+writing_file_contents('../data/products.csv', '../data/writing-stuff.csv')
+
 def list_products():
     print 'listing products'
 
@@ -50,4 +76,4 @@ def destroy_products():
     print 'destroying products'
 
 
-read_input(raw_input('Operation: '))
+# read_input(raw_input('Operation: '))
