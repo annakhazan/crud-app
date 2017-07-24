@@ -11,6 +11,7 @@ with open('../data/products.csv', 'rU') as f:
         count += 1
 
 #Checkpoints 1.1 and 2.1.4 Print a menu with number of products
+print 'Welcome ak2962!'
 print 'There are {0} products in the database. Please select an operation:'.format(count-1)
 print 'Operation | Description'
 print '-------------------------'
