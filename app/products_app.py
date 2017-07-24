@@ -43,20 +43,95 @@ def read_input(operation):
 #Checkpoint 3.1
 def list_products():
     print 'Listing products'
+    with open('../data/products.csv', 'rU') as f:
+        csvreader = csv.reader(f, delimiter=',')
+        i = 0
+        for row in csvreader:
+            if i > 0:
+                print 'Product id: {0}'.format(row[0])
+                print 'Product name: {0}'.format(row[1])
+                print ''
+            i+=1
 
 #Checkpoint 3.2
 def show_product():
     print 'Showing product'
+    product_id = raw_input('Please select a product identifier: ')
+    with open('../data/products.csv') as f:
+        csvreader = csv.reader(f, delimiter=',')
+        check = 0
+        for row in csvreader:
+            if row[0] == product_id:
+                print 'Product name: {0}'.format(row[1])
+                print 'Product aisle: {0}'.format(row[2])
+                print 'Product department: {0}'.format(row[3])
+                print 'Product price: ${0}'.format(row[4])
+                check = 1
+        if check == 0:
+            print 'Product id is invalid, please try again.'
 
 #Checkpoint 3.3
 def create_product():
     print 'Creating product'
+    with open('../data/products.csv', 'rU') as f:
+        csvreader = csv.reader(f, delimiter=',')
+        max_id = -1
+        for row in csvreader:
+            max_id += 1
+    name = raw_input('Please enter product name: ')
+    department = raw_input('Please enter product department: ')
+    aisle = raw_input('Please enter product aisle: ')
+    price = raw_input('Please enter product price: ')
+    new_row = [max_id+1, name, department, aisle, price]
+    with open('../data/products.csv', 'a') as f:
+        csvwriter = csv.writer(f, delimiter=',')
+        csvwriter.writerow(new_row)
 
-def update_product():
-    print 'Updating product'
-
+#Checkpoint 3.4
 def destroy_product():
     print 'Destroying product'
+    product_id = raw_input('Please select a product identier: ')
+    data = []
+    check = 0
+    with open('../data/products.csv', 'rU') as f:
+        csvreader = csv.reader(f, delimiter= ',')
+        for row in csvreader:
+            if product_id == row[0]:
+                print 'Deleting {0} from records'.format(row[1])
+                check = 1
+            else:
+                data.append(row)
+    if check == 1:
+        print 'Please enter a valid product identifier to delete'
+    with open('../data/products.csv', 'w+') as f:
+        csvwriter = csv.writer(f, delimiter = ',')
+        for row in data:
+            csvwriter.writerow(row)
+
+#Checkpoint 3.5
+def update_product():
+    print 'Updating product'
+    product_id = raw_input('Please select a product identifier: ')
+    name = raw_input('Please enter product name: ')
+    department = raw_input('Please enter product department: ')
+    aisle = raw_input('Please enter product aisle: ')
+    price = raw_input('Please enter product price: ')
+    data = []
+    check = 0
+    with open('../data/products.csv', 'rU') as f:
+        csvreader = csv.reader(f, delimiter= ',')
+        for row in csvreader:
+            if product_id == row[0]:
+                data.append([row[0], name, department, aisle, price])
+                check = 1
+            else:
+                data.append(row)
+    if check == 1:
+        print 'Please enter a valid product identifier'
+    with open('../data/products.csv', 'w+') as f:
+        csvwriter = csv.writer(f, delimiter = ',')
+        for row in data:
+            csvwriter.writerow(row)
 
 #Checkpoint 1 User Inputs
 read_input(raw_input('Operation: ').title())
@@ -120,50 +195,3 @@ def overwriting_contents(path):
         for row in data:
             csvwriter.writerow(row)
 overwriting_contents('../data/products.csv')
-
-
-
-# def writing_file_contents(read_path, write_path):
-#     print 'Writing contents to file'
-#     with open(write_path, 'w+') as write_file:
-#         csvwriter = csv.writer(write_file)
-#         with open(read_path, 'rU') as read_file:
-#             csvreader = csv.reader(read_file, delimiter = '\t')
-#             for row in csvreader:
-#                 csvwriter.writerow(row)
-#
-# def writing_file_contents(read_path, write_path):
-#     print 'Writing contents to database'
-#     with open(write_path, 'w+') as write_file:
-#         csvwriter = csv.writer(write_file)
-#         with open(read_path, 'rU') as read_file:
-#             csvreader = csv.reader(read_file, delimiter = '\t')
-#             for row in csvreader:
-#                 csvwriter.writerow(row)
-#
-# def overwriting_file_contents(path):
-#     print 'Overwriting contents to database'
-#     data = []
-#     with open(path, 'rU') as f:
-#         csvreader = csv.reader(f, delimiter = '\t')
-#         for row in csvreader:
-#             data.append(row)
-#     with open(path, 'w+') as f:
-#         csvwriter = csv.writer(f)
-#         for row in data:
-#             csvwriter.writerow(row)
-#
-# # #Reading from csv file
-# # reading_file_contents('../data/products.csv')
-# #
-# # #Writing to another file
-# # writing_file_contents('../data/products.csv', '../data/writing-products.csv')
-# #
-# # #Writing to same file
-# # overwriting_file_contents('../data/products.csv')
-#
-#
-#
-
-#
-#
