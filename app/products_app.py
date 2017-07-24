@@ -40,12 +40,15 @@ def read_input(operation):
     elif operation == 'Destroy':
         destroy_product()
 
+#Checkpoint 3.1
 def list_products():
     print 'Listing products'
 
+#Checkpoint 3.2
 def show_product():
     print 'Showing product'
 
+#Checkpoint 3.3
 def create_product():
     print 'Creating product'
 
@@ -61,9 +64,9 @@ read_input(raw_input('Operation: ').title())
 
 
 #Checkpoint 2 - Reading and Writing to CSV file
-#Checkpoint2 2.1.1 and 2.1.2 Print entire contents of inventory CSV file
+#Checkpoints 2.1.1 and 2.1.2 Print entire contents of inventory CSV file
 def reading_file_contents(path):
-    print 'Reading contents of database'
+    print 'Reading contents of file'
     count = 0
     text = ''
     with open(path, 'rU') as f:
@@ -80,12 +83,54 @@ def reading_file_contents(path):
         print text
 reading_file_contents('../data/products.csv')
 
+#Checkpoint 2.2.1 Write some random content to data/writing-stuff.csv
+def writing_file_contents(write_path, data):
+    print 'Writing contents to file'
+    with open(write_path, 'w+') as write_file:
+        csvwriter = csv.writer(write_file)
+        for row in data:
+            csvwriter.writerow(row)
+sample_data = [
+    ['Field 1', 'Field 2', 'Field 3'],
+    ['Datapoint 1', 'Datapoint 2', 'Datapoint 3']
+]
+writing_file_contents('../data/writing-stuff.csv', sample_data)
+
+#Checkpoint 2.2.2 Read existing inventory from products.csv and write it to data/writing-products.csv
+def reading_and_writing_contents(read_path, write_path):
+    print 'Reading and writing contents to file'
+    with open(write_path, 'w+') as write_file:
+        with open(read_path, 'rU') as read_file:
+            csvreader = csv.reader(read_file, delimiter='\t')
+            csvwriter = csv.writer(write_file, delimiter='\t')
+            for row in csvreader:
+                csvwriter.writerow(row)
+reading_and_writing_contents('../data/products.csv', '../data/writing-products.csv')
+
+#Checkpoint 2.2.3 Reading and writing to same file
+def overwriting_contents(path):
+    print 'Overwriting file contents'
+    with open(path, 'rU') as read_file:
+        csvreader = csv.reader(read_file, delimiter='\t')
+        data = []
+        for row in csvreader:
+            data.append(row)
+    with open(path, 'w+') as write_file:
+        csvwriter = csv.writer(write_file, delimiter='\t')
+        for row in data:
+            csvwriter.writerow(row)
+overwriting_contents('../data/products.csv')
 
 
 
-
-#
-
+# def writing_file_contents(read_path, write_path):
+#     print 'Writing contents to file'
+#     with open(write_path, 'w+') as write_file:
+#         csvwriter = csv.writer(write_file)
+#         with open(read_path, 'rU') as read_file:
+#             csvreader = csv.reader(read_file, delimiter = '\t')
+#             for row in csvreader:
+#                 csvwriter.writerow(row)
 #
 # def writing_file_contents(read_path, write_path):
 #     print 'Writing contents to database'
