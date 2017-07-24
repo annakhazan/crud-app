@@ -59,7 +59,7 @@ def show_product():
     print ''
     print 'Showing product'
     product_id = raw_input('Please select a product identifier: ')
-    with open('../data/products.csv') as f:
+    with open('../data/products.csv', 'rU') as f:
         csvreader = csv.reader(f, delimiter=',')
         check = 0
         for row in csvreader:
@@ -86,8 +86,9 @@ def create_product():
     aisle = raw_input('Please enter product aisle: ')
     price = raw_input('Please enter product price: ')
     new_row = [max_id+1, name, department, aisle, price]
-    with open('../data/products.csv', 'a') as f:
+    with open('../data/products.csv', 'ab') as f:
         csvwriter = csv.writer(f, delimiter=',')
+        csvwriter.writerow([])
         csvwriter.writerow(new_row)
 
 #Checkpoint 3.4
@@ -105,7 +106,7 @@ def destroy_product():
                 check = 1
             else:
                 data.append(row)
-    if check == 1:
+    if check == 0:
         print 'Please enter a valid product identifier to delete'
     with open('../data/products.csv', 'w+') as f:
         csvwriter = csv.writer(f, delimiter = ',')
