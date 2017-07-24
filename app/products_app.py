@@ -1,27 +1,5 @@
 import csv
 
-print '-------------------------'
-print 'PRODUCTS APPLICATION'
-print '-------------------------'
-
-with open('./data/products.csv', 'rU') as f:
-    csvreader = csv.reader(f)
-    count = 0
-    for row in csvreader:
-        count += 1
-
-#Checkpoints 1.1 and 2.1.4 Print a menu with number of products
-print 'Welcome ak2962!'
-print 'There are {0} products in the database. Please select an operation:'.format(count-1)
-print 'Operation | Description'
-print '-------------------------'
-print 'List      | Display a list of product identifiers and names'
-print 'Show      | Show information about a product'
-print 'Create    | Add a new product'
-print 'Update    | Edit an existing product'
-print 'Destroy   | Delete an existing product'
-
-
 def read_input(operation):
     #Checkpoint 1.2 Prompt user to choose operation, and print it
     if operation in ['List', 'Show', 'Create', 'Update', 'Destroy']:
@@ -140,8 +118,7 @@ def update_product():
         for row in data:
             csvwriter.writerow(row)
 
-#Checkpoint 1 User Inputs
-read_input(raw_input('Operation: ').title())
+
 
 #Checkpoint 2 - Reading and Writing to CSV file
 #Checkpoints 2.1.1 and 2.1.2 Print entire contents of inventory CSV file
@@ -200,3 +177,30 @@ def overwriting_contents(path):
         for row in data:
             csvwriter.writerow(row)
 # overwriting_contents('./data/products.csv')
+
+
+if __name__ == '__main__':
+    print '-------------------------'
+    print 'PRODUCTS APPLICATION'
+    print '-------------------------'
+
+    with open('./data/products.csv', 'rU') as f:
+        csvreader = csv.reader(f)
+        count = 0
+        for row in csvreader:
+            count += 1
+
+    #Checkpoints 1.1 and 2.1.4 Print a menu with number of products
+    print 'Welcome ak2962!'
+    print 'There are {0} products in the database. Please select an operation:'.format(count-1)
+    print 'Operation | Description'
+    print '-------------------------'
+    print 'List      | Display a list of product identifiers and names'
+    print 'Show      | Show information about a product'
+    print 'Create    | Add a new product'
+    print 'Update    | Edit an existing product'
+    print 'Destroy   | Delete an existing product'
+
+
+    #Checkpoint 1 User Inputs
+    read_input(raw_input('Operation: ').title())
